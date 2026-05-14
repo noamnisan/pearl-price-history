@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pearl Price History</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Pearl OTC public ledger</p>
+          <h1>Pearl Price History</h1>
+        </div>
+        <a class="icon-text-button link-button" href="https://pearl-otc.com/all-settlements" target="_blank" rel="noopener noreferrer">
+          Pearl OTC
+          <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+
+      <section class="summary-grid" aria-live="polite">
+        <div><span class="label">Displayed period weighted price</span><strong id="currentPrice">-</strong></div>
+        <div><span class="label">Displayed period PRL volume</span><strong id="rangeVolume">-</strong></div>
+        <div><span class="label">Displayed period USD total</span><strong id="rangeUsdTotal">-</strong></div>
+        <div><span class="label">Displayed period trades</span><strong id="tradeCount">-</strong></div>
+        <div><span class="label">Latest settlement</span><strong id="latestTrade">-</strong></div>
+      </section>
+
+      <section class="controls" aria-label="Chart range">
+        <div class="segmented" role="radiogroup" aria-label="Time range">
+          <button class="range-button is-active" type="button" data-range="1d" role="radio" aria-checked="true">1D</button>
+          <button class="range-button" type="button" data-range="1w" role="radio" aria-checked="false">1W</button>
+          <button class="range-button" type="button" data-range="1m" role="radio" aria-checked="false">1M</button>
+          <button class="range-button" type="button" data-range="1y" role="radio" aria-checked="false">1Y</button>
+        </div>
+        <div class="data-actions">
+          <div id="status" class="status">Loading settlements...</div>
+          <button id="refreshButton" class="icon-text-button" type="button" aria-label="Refresh graph data"><span aria-hidden="true">↻</span>Refresh data</button>
+        </div>
+      </section>
+
+      <section class="chart-panel" aria-label="Pearl price chart">
+        <div class="chart-hint">Click on a data point to see included transactions.</div>
+        <svg id="chart" role="img" aria-labelledby="chartTitle chartDescription"></svg>
+        <h2 id="chartTitle" class="sr-only">Pearl token weighted average price over time</h2>
+        <p id="chartDescription" class="sr-only">A line chart showing quantity-weighted Pearl transaction prices in USDC.</p>
+        <div id="emptyState" class="empty-state" hidden>No completed settlements in this range.</div>
+      </section>
+
+      <section id="bucketDetail" class="bucket-detail" aria-label="Bucket transactions" hidden>
+        <div class="bucket-detail-header">
+          <div class="bucket-title-group"><h2 id="bucketDetailTitle">Bucket Transactions</h2><span id="bucketDetailMeta" class="label">-</span></div>
+          <div class="bucket-stat-grid" aria-live="polite">
+            <div><span class="label">Weighted avg</span><strong id="detailWeightedPrice">-</strong></div>
+            <div><span class="label">Range</span><strong id="detailPriceRange">-</strong></div>
+            <div><span class="label">PRL volume</span><strong id="detailVolume">-</strong></div>
+            <div><span class="label">USD total</span><strong id="detailUsdTotal">-</strong></div>
+            <div><span class="label">Trades</span><strong id="detailTrades">-</strong></div>
+          </div>
+          <button id="closeBucketDetail" class="icon-text-button compact" type="button" aria-label="Close bucket details"><span aria-hidden="true">×</span>Close</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Time</th><th>Side</th><th>PRL</th><th>Price</th><th>USDC total</th><th>Trade</th></tr></thead>
+            <tbody id="bucketTradeRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="details-grid">
+        <div><span class="label">Granularity</span><strong id="granularity">Hourly</strong></div>
+        <div><span class="label">Data source</span><strong>pearl-otc.com</strong></div>
+        <div><span class="label">Range anchor</span><strong id="rangeAnchor">Latest trade</strong></div>
+      </section>
+    </main>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
